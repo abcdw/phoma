@@ -14,12 +14,15 @@ TEMPLATE = app
 
 SOURCES +=\
     src/main.cpp \
-    src/mainwindow.cpp \
-    src/tcontroller.cpp
+    src/tcontroller.cpp \
+    forms/mainpage.cpp \
+    forms/mainwindow.cpp
 
 HEADERS  += \
-    src/mainwindow.h \
-    src/tcontroller.h
+    src/tcontroller.h \
+    forms/mainpage.h \
+    forms/mainwindow.h
 
 FORMS    += \
-    forms/mainwindow.ui
+    forms/mainwindow.ui \
+    forms/mainpage.ui

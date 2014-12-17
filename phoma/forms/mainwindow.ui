@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QTabWidget" name="authTabWidget">
+     <widget class="QTabWidget" name="tabWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -28,7 +28,7 @@
       </property>
       <widget class="QWidget" name="authPage" native="true">
        <attribute name="title">
-        <string>auth</string>
+        <string>Auth</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="0" column="0">
@@ -132,14 +132,6 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="mainPage">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <attribute name="title">
-        <string>main</string>
-       </attribute>
-      </widget>
      </widget>
     </item>
    </layout>
@@ -155,7 +147,7 @@
    </property>
    <widget class="QMenu" name="menuExit">
     <property name="title">
-     <string>file</string>
+     <string>File</string>
     </property>
     <addaction name="actionExit"/>
    </widget>
@@ -164,7 +156,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionExit">
    <property name="text">
-    <string>exit</string>
+    <string>Exit</string>
    </property>
   </action>
  </widget>
