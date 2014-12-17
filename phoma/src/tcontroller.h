@@ -10,8 +10,10 @@ public:
     explicit TController(QObject *parent = 0);
 
 signals:
+    void authenticated();
 
 public slots:
+    void authenticate(const QString &user, const QString &pass);
 
 };
 
