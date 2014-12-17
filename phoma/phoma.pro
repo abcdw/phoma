@@ -12,9 +12,12 @@ TARGET = phoma
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mainwindow.cpp
+SOURCES +=\
+    src/main.cpp \
+    src/mainwindow.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += \
+    src/mainwindow.h
 
-FORMS    += mainwindow.ui
+FORMS    += \
+    forms/mainwindow.ui
