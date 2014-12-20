@@ -168,6 +168,13 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>loginEdit</tabstop>
+  <tabstop>passEdit</tabstop>
+  <tabstop>loginButton</tabstop>
+  <tabstop>logoutButton</tabstop>
+  <tabstop>tabWidget</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

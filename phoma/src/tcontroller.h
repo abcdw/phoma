@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QtSql>
+#include <QCryptographicHash>
 
 class TController : public QObject
 {
@@ -17,6 +19,9 @@ signals:
 
 public slots:
     void authenticate(const QString &user, const QString &pass);
+
+private:
+    QSqlDatabase sdb;
 
 };
 
