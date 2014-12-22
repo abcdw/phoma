@@ -3,29 +3,19 @@
 TController::TController(QObject *parent) :
     QObject(parent)
 {
-    connect(this, SIGNAL(authFail()), this, SLOT(deleteLater()));
-
     QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
     sdb.setDatabaseName("db.sqlite3");
 
     if (!sdb.open()) {
         qDebug() << sdb.lastError().text();
-        emit authFail();
     }
 
-    qDebug() << "TController created";
+    qDebug("TController created");
 }
 
 TController::~TController()
 {
-    qDebug() << "TController deleted";
-}
-
-void TController::updateSectionsTable(QTableView *table)
-{
-    QPointer<QSqlQueryModel> queryModel = new QSqlQueryModel;
-    queryModel->setQuery("SELECT id, name, description FROM sections");
-    table->setModel(queryModel);
+    qDebug("TController deleted");
 }
 
 void TController::uploadPhoto(const QString &path)
@@ -83,4 +73,47 @@ void TController::authenticate(const QString &user, const QString &pass)
     } else {
         emit authFail();
     }
+
+    mainPage = new MainPage();
+    mainPage->show();
+    connect(mainPage, SIGNAL(updatePhotos(int)), this, SLOT(updatePhotos(int)));
+    updateSections();
+}
+
+void TController::deauthenticate()
+{
+
+    emit logout();
+}
+
+void TController::updateSections()
+{
+    QPointer<QSqlQueryModel> queryModel = new QSqlQueryModel();
+    queryModel->setQuery("SELECT id, name, description FROM sections");
+//  queryModel = TSection::getAll();
+    mainPage->setSectionTableModel(queryModel);
+}
+
+void TController::updatePhotos(int sectionId)
+{
+    QSqlQuery query;
+    query.prepare("SELECT * FROM photos WHERE section_id=:sectionId");
+    query.bindValue(":sectionId", sectionId);
+    query.exec();
+    qDebug() << query.executedQuery();
+
+    QListWidget *list;
+    list = mainPage->getPhotosWidget();
+    list->clear();
+
+    while (query.next()) {
+        QListWidgetItem *lwi;
+        QByteArray image = query.value(6).toByteArray();
+        QString name = query.value(2).toString();
+        QPixmap pixmap;
+        pixmap.loadFromData(image);
+        lwi = new QListWidgetItem(QIcon(pixmap), name);
+        list->insertItem(0, lwi);
+    }
+
 }

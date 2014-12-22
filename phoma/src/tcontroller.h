@@ -10,6 +10,10 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QListWidget>
+#include "tuser.h"
+#include "tsection.h"
+#include "tphoto.h"
+#include "forms/mainpage.h"
 
 class TController : public QObject
 {
@@ -17,19 +21,25 @@ class TController : public QObject
 public:
     explicit TController(QObject *parent = 0);
     ~TController();
-    void updateSectionsTable(QTableView *table);
     void uploadPhoto(const QString &path);
     void getPhotos(QListWidget *list);
+    bool isLogged();
 
 signals:
     void authSuccess();
     void authFail();
+    void logout();
 
 public slots:
     void authenticate(const QString &user, const QString &pass);
+    void deauthenticate();
+    void updateSections();
+    void updatePhotos(int sectionId);
 
 private:
-
+    bool logged;
+    TUser user;
+    MainPage *mainPage;
 };
 
 #endif // TCONTROLLER_H

@@ -31,7 +31,6 @@ public slots:
 private:
     Ui::MainWindow *ui;
     TController *controller;
-    bool logined;
 };
 
 #endif // MAINWINDOW_H

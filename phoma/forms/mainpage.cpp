@@ -1,16 +1,12 @@
 #include "mainpage.h"
 #include "ui_mainpage.h"
 
-MainPage::MainPage(TController *controller) :
-    controller(controller),
+MainPage::MainPage() :
     ui(new Ui::MainPage)
 {
     ui->setupUi(this);
-
-    connect(controller, SIGNAL(destroyed()), this, SLOT(deleteLater()));
-    controller->updateSectionsTable(ui->sectionsTable);
     ui->sectionsTable->hideColumn(0);
-    connect(ui->sectionsTable, SIGNAL(clicked(QModelIndex)), this, SLOT(showIndex()));
+    connect(ui->sectionsTable, SIGNAL(clicked(QModelIndex)), this, SLOT(showIndex(QModelIndex)));
 }
 
 MainPage::~MainPage()
@@ -18,17 +14,27 @@ MainPage::~MainPage()
     delete ui;
 }
 
-void MainPage::showIndex()
+QTableView *MainPage::getSectionsTable()
 {
-    controller->getPhotos(ui->photosList);
-//    QListWidgetItem *lwi = new QListWidgetItem(QIcon("test.jpeg"), "test");
-
-//    PhotoForm *pf = new PhotoForm();
-//    pf->show();
-//    ui->photosList->insertItem(0, lwi);
+    return ui->sectionsTable;
 }
 
-void MainPage::updateSectionsTable()
+QListWidget *MainPage::getPhotosWidget()
 {
-    controller->updateSectionsTable(ui->sectionsTable);
+    return ui->photosList;
 }
+
+void MainPage::setSectionTableModel(QSqlQueryModel *model)
+{
+    ui->sectionsTable->setModel(model);
+}
+
+void MainPage::showIndex(QModelIndex indx)
+{
+    QModelIndex new_indx = ui->sectionsTable->model()->index(indx.row(), 0, QModelIndex());
+    emit updatePhotos(new_indx.data().toInt());
+}
+
+//void MainPage::updateSectionsTable()
+//{
+//}

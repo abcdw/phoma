@@ -3,6 +3,7 @@
 
 #include <QVector>
 #include <QString>
+#include <QtSql>
 
 class TSection
 {

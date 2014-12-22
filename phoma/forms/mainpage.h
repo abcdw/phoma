@@ -3,8 +3,11 @@
 
 #include <QWidget>
 #include <QDebug>
-#include "src/tcontroller.h"
+//#include "src/tcontroller.h"
 #include "photoform.h"
+#include <QtSql>
+#include <QTableView>
+#include <QListWidget>
 
 namespace Ui {
 class MainPage;
@@ -15,16 +18,20 @@ class MainPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit MainPage(TController *controller);
+    explicit MainPage();
     ~MainPage();
+    QTableView *getSectionsTable();
+    QListWidget *getPhotosWidget();
 
 public slots:
-    void showIndex();
+    void showIndex(QModelIndex indx);
+    void setSectionTableModel(QSqlQueryModel *model);
+
+signals:
+    void updatePhotos(int);
 
 private:
     Ui::MainPage *ui;
-    TController *controller;
-    void updateSectionsTable();
 };
 
 #endif // MAINPAGE_H
