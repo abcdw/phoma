@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->logoutButton, SIGNAL(clicked()), this, SLOT(logout()));
     connect(ui->actionLogout, SIGNAL(triggered()), this, SLOT(logout()));
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
+    login();
 }
 
 MainWindow::~MainWindow()
@@ -23,20 +24,21 @@ void MainWindow::login()
     ui->statusBar->showMessage("Authentication in progress...");
     logout();
 
-    controller = new TController();
+    controller = new TController(this);
     connect(this, SIGNAL(login(QString, QString)),
             controller, SLOT(authenticate(QString,QString)));
     connect(controller, SIGNAL(authSuccess()), this, SLOT(authSuccess()));
     connect(controller, SIGNAL(authFail()), this, SLOT(authFail()));
     connect(this, SIGNAL(removeController()), controller, SLOT(deleteLater()));
 
-    emit login(ui->loginEdit->text(), ui->passEdit->text());
+    //emit login(ui->loginEdit->text(), ui->passEdit->text());
+    emit login("admin", "admin");
 }
 
 void MainWindow::authSuccess()
 {
     ui->statusBar->showMessage("Login successful");
-    QPointer<MainPage> mainPage = new MainPage();
+    QPointer<MainPage> mainPage = new MainPage(this);
 
     ui->loginButton->setEnabled(false);
     ui->logoutButton->setEnabled(true);
