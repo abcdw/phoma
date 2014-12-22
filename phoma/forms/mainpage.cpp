@@ -1,17 +1,16 @@
 #include "mainpage.h"
 #include "ui_mainpage.h"
 
-MainPage::MainPage(QWidget *parent) :
-    QWidget(parent),
+MainPage::MainPage(TController *controller) :
+    controller(controller),
     ui(new Ui::MainPage)
 {
     ui->setupUi(this);
 
-    for (int i = 0; i < 100; ++i) {
-        ui->sectionsList->addItem("testsection - testsection description");
-    }
-
-    connect(ui->sectionsList, SIGNAL(clicked(QModelIndex)), this, SLOT(showIndex()));
+    connect(controller, SIGNAL(destroyed()), this, SLOT(deleteLater()));
+    controller->updateSectionsTable(ui->sectionsTable);
+    ui->sectionsTable->hideColumn(0);
+    connect(ui->sectionsTable, SIGNAL(clicked(QModelIndex)), this, SLOT(showIndex()));
 }
 
 MainPage::~MainPage()
@@ -21,10 +20,15 @@ MainPage::~MainPage()
 
 void MainPage::showIndex()
 {
-    qDebug() << ui->sectionsList->currentIndex().row();
-    QListWidgetItem *lwi = new QListWidgetItem(QIcon("test.jpeg"), "test");
+    controller->getPhotos(ui->photosList);
+//    QListWidgetItem *lwi = new QListWidgetItem(QIcon("test.jpeg"), "test");
 
-    PhotoForm *pf = new PhotoForm();
-    pf->show();
-    ui->photosList->insertItem(0, lwi);
+//    PhotoForm *pf = new PhotoForm();
+//    pf->show();
+//    ui->photosList->insertItem(0, lwi);
+}
+
+void MainPage::updateSectionsTable()
+{
+    controller->updateSectionsTable(ui->sectionsTable);
 }

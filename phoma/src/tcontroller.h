@@ -5,6 +5,11 @@
 #include <QDebug>
 #include <QtSql>
 #include <QCryptographicHash>
+#include <QListView>
+#include <QTableView>
+#include <QFileDialog>
+#include <QFile>
+#include <QListWidget>
 
 class TController : public QObject
 {
@@ -12,6 +17,9 @@ class TController : public QObject
 public:
     explicit TController(QObject *parent = 0);
     ~TController();
+    void updateSectionsTable(QTableView *table);
+    void uploadPhoto(const QString &path);
+    void getPhotos(QListWidget *list);
 
 signals:
     void authSuccess();

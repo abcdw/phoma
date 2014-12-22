@@ -38,7 +38,7 @@ void MainWindow::login()
 void MainWindow::authSuccess()
 {
     ui->statusBar->showMessage("Login successful");
-    QPointer<MainPage> mainPage = new MainPage(this);
+    QPointer<MainPage> mainPage = new MainPage(controller);
 
     ui->loginButton->setEnabled(false);
     ui->logoutButton->setEnabled(true);

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QDebug>
+#include "src/tcontroller.h"
 #include "photoform.h"
 
 namespace Ui {
@@ -14,7 +15,7 @@ class MainPage : public QWidget
     Q_OBJECT
 
 public:
-    explicit MainPage(QWidget *parent = 0);
+    explicit MainPage(TController *controller);
     ~MainPage();
 
 public slots:
@@ -22,6 +23,8 @@ public slots:
 
 private:
     Ui::MainPage *ui;
+    TController *controller;
+    void updateSectionsTable();
 };
 
 #endif // MAINPAGE_H
