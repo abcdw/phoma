@@ -14,7 +14,7 @@ public:
     static QVector<TPhoto> getPhotos();
     void save();
 
-private:
+//private:
     int id;
     QString filename;
     QString title;

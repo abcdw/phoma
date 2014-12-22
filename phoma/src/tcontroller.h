@@ -14,6 +14,7 @@
 #include "tsection.h"
 #include "tphoto.h"
 #include "forms/mainpage.h"
+#include "forms/photoform.h"
 
 class TController : public QObject
 {
@@ -35,6 +36,8 @@ public slots:
     void deauthenticate();
     void updateSections();
     void updatePhotos(int sectionId);
+    void showPhotoWidget();
+    void showSectionsWidget();
 
 private:
     bool logged;

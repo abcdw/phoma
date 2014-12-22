@@ -7,6 +7,7 @@ MainPage::MainPage() :
     ui->setupUi(this);
     ui->sectionsTable->hideColumn(0);
     connect(ui->sectionsTable, SIGNAL(clicked(QModelIndex)), this, SLOT(showIndex(QModelIndex)));
+    connect(ui->photosList, SIGNAL(clicked(QModelIndex)), this, SLOT(showPhoto(QModelIndex)));
 }
 
 MainPage::~MainPage()
@@ -29,9 +30,14 @@ void MainPage::setSectionTableModel(QSqlQueryModel *model)
     ui->sectionsTable->setModel(model);
 }
 
-void MainPage::showIndex(QModelIndex indx)
+void MainPage::showPhoto(QModelIndex index)
 {
-    QModelIndex new_indx = ui->sectionsTable->model()->index(indx.row(), 0, QModelIndex());
+    emit showPhotoWidget();
+}
+
+void MainPage::showIndex(QModelIndex index)
+{
+    QModelIndex new_indx = ui->sectionsTable->model()->index(index.row(), 0, QModelIndex());
     emit updatePhotos(new_indx.data().toInt());
 }
 

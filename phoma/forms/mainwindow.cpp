@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(controller, SIGNAL(authSuccess()), this, SLOT(authSuccess()));
     connect(controller, SIGNAL(authFail()), this, SLOT(authFail()));
     connect(controller, SIGNAL(logout()), this, SLOT(logout()));
-    login();
+//    login();
 }
 
 MainWindow::~MainWindow()
@@ -30,8 +30,8 @@ void MainWindow::login()
 
     ui->statusBar->showMessage("Authentication in progress...");
 
-    //emit login(ui->loginEdit->text(), ui->passEdit->text());
-    emit login("admin", "admin");
+    emit login(ui->loginEdit->text(), ui->passEdit->text());
+//    emit login("admin", "admin");
 }
 
 void MainWindow::authSuccess()

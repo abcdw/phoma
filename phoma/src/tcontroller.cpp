@@ -11,6 +11,7 @@ TController::TController(QObject *parent) :
     }
 
     qDebug("TController created");
+    connect(this, SIGNAL(authSuccess()), this, SLOT(showSectionsWidget()));
 }
 
 TController::~TController()
@@ -74,11 +75,8 @@ void TController::authenticate(const QString &user, const QString &pass)
         emit authFail();
     }
 
-    mainPage = new MainPage();
-    mainPage->show();
-    connect(mainPage, SIGNAL(updatePhotos(int)), this, SLOT(updatePhotos(int)));
-    updateSections();
 }
+
 
 void TController::deauthenticate()
 {
@@ -100,7 +98,6 @@ void TController::updatePhotos(int sectionId)
     query.prepare("SELECT * FROM photos WHERE section_id=:sectionId");
     query.bindValue(":sectionId", sectionId);
     query.exec();
-    qDebug() << query.executedQuery();
 
     QListWidget *list;
     list = mainPage->getPhotosWidget();
@@ -116,4 +113,35 @@ void TController::updatePhotos(int sectionId)
         list->insertItem(0, lwi);
     }
 
+}
+
+void TController::showPhotoWidget()
+{
+    PhotoForm *pf = new PhotoForm();
+    TPhoto photo;
+    QSqlQuery query;
+    query.prepare("SELECT * FROM photos WHERE id=:id");
+    query.bindValue(":id", 1);
+    query.exec();
+
+    while (query.next()) {
+        QByteArray image = query.value(6).toByteArray();
+        QString name = query.value(2).toString();
+        QPixmap pixmap;
+        pixmap.loadFromData(image);
+        photo.title = name;
+        photo.photo = pixmap;
+    }
+
+    pf->setPhoto(photo);
+    pf->show();
+}
+
+void TController::showSectionsWidget()
+{
+    mainPage = new MainPage();
+    mainPage->show();
+    connect(mainPage, SIGNAL(updatePhotos(int)), this, SLOT(updatePhotos(int)));
+    connect(mainPage, SIGNAL(showPhotoWidget()), this, SLOT(showPhotoWidget()));
+    updateSections();
 }

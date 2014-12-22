@@ -24,11 +24,13 @@ public:
     QListWidget *getPhotosWidget();
 
 public slots:
-    void showIndex(QModelIndex indx);
+    void showIndex(QModelIndex index);
     void setSectionTableModel(QSqlQueryModel *model);
+    void showPhoto(QModelIndex index);
 
 signals:
     void updatePhotos(int);
+    void showPhotoWidget();
 
 private:
     Ui::MainPage *ui;

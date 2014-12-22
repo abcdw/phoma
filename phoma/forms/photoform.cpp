@@ -12,3 +12,11 @@ PhotoForm::~PhotoForm()
 {
     delete ui;
 }
+
+void PhotoForm::setPhoto(TPhoto &photo)
+{
+    ui->nameLabel->setText(photo.title);
+    QGraphicsScene *scene = new QGraphicsScene(ui->photoView);
+    scene->addPixmap(photo.photo);
+    ui->photoView->setScene(scene);
+}
