@@ -17,13 +17,19 @@ SOURCES +=\
     src/tcontroller.cpp \
     forms/mainpage.cpp \
     forms/mainwindow.cpp \
-    forms/photoform.cpp
+    forms/photoform.cpp \
+    src/tphoto.cpp \
+    src/tsection.cpp \
+    src/tuser.cpp
 
 HEADERS  += \
     src/tcontroller.h \
     forms/mainpage.h \
     forms/mainwindow.h \
-    forms/photoform.h
+    forms/photoform.h \
+    src/tphoto.h \
+    src/tsection.h \
+    src/tuser.h
 
 FORMS    += \
     forms/mainwindow.ui \
