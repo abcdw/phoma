@@ -30,9 +30,6 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QListWidget" name="sectionsList"/>
-   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="sectionsLabel">
      <property name="text">
@@ -40,10 +37,27 @@
      </property>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="QListWidget" name="sectionsList"/>
+   </item>
    <item row="0" column="1">
     <widget class="QLabel" name="photosLabel">
      <property name="text">
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Photos:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="addSectionButton">
+     <property name="text">
+      <string>Add Section</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="addPhotoButton">
+     <property name="text">
+      <string>Add Photo</string>
      </property>
     </widget>
    </item>

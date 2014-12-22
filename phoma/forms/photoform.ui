@@ -49,6 +49,13 @@
      </item>
     </layout>
    </item>
+   <item row="5" column="1">
+    <widget class="QPushButton" name="editButton">
+     <property name="text">
+      <string>Edit</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>
