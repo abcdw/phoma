@@ -29,7 +29,6 @@ public slots:
     void authenticate(const QString &user, const QString &pass);
 
 private:
-    QSqlDatabase sdb;
 
 };
 

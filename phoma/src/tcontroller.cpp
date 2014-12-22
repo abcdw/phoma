@@ -5,14 +5,13 @@ TController::TController(QObject *parent) :
 {
     connect(this, SIGNAL(authFail()), this, SLOT(deleteLater()));
 
-    sdb = QSqlDatabase::addDatabase("QSQLITE");
+    QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
     sdb.setDatabaseName("db.sqlite3");
 
     if (!sdb.open()) {
         qDebug() << sdb.lastError().text();
         emit authFail();
     }
-
 
     qDebug() << "TController created";
 }
