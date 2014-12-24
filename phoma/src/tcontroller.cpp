@@ -81,6 +81,7 @@ void TController::authenticate(const QString &user, const QString &pass)
 void TController::deauthenticate()
 {
 
+    qDebug("TController::deauthenticate()");
     emit logout();
 }
 
@@ -102,39 +103,34 @@ void TController::updatePhotos(int sectionId)
     QListWidget *list;
     list = mainPage->getPhotosWidget();
     list->clear();
+    photos.erase(photos.begin(), photos.end());
 
     while (query.next()) {
         QListWidgetItem *lwi;
-        QByteArray image = query.value(6).toByteArray();
-        QString name = query.value(2).toString();
-        QPixmap pixmap;
-        pixmap.loadFromData(image);
-        lwi = new QListWidgetItem(QIcon(pixmap), name);
-        list->insertItem(0, lwi);
+        photos.push_back(TPhoto::getFromQuery(query));
+        TPhoto &photo = photos.back();
+        lwi = new QListWidgetItem(QIcon(photo.photo), photo.title);
+        list->insertItem(list->count(), lwi);
     }
 
 }
 
-void TController::showPhotoWidget()
+void TController::showPhotoWidget(int index)
 {
     PhotoForm *pf = new PhotoForm();
     TPhoto photo;
     QSqlQuery query;
     query.prepare("SELECT * FROM photos WHERE id=:id");
-    query.bindValue(":id", 1);
+    query.bindValue(":id", photos[index].id);
     query.exec();
 
     while (query.next()) {
-        QByteArray image = query.value(6).toByteArray();
-        QString name = query.value(2).toString();
-        QPixmap pixmap;
-        pixmap.loadFromData(image);
-        photo.title = name;
-        photo.photo = pixmap;
+        photo = TPhoto::getFromQuery(query);
     }
 
     pf->setPhoto(photo);
     pf->show();
+    connect(this, SIGNAL(logout()), pf, SLOT(deleteLater()));
 }
 
 void TController::showSectionsWidget()
@@ -142,6 +138,8 @@ void TController::showSectionsWidget()
     mainPage = new MainPage();
     mainPage->show();
     connect(mainPage, SIGNAL(updatePhotos(int)), this, SLOT(updatePhotos(int)));
-    connect(mainPage, SIGNAL(showPhotoWidget()), this, SLOT(showPhotoWidget()));
+    connect(mainPage, SIGNAL(showPhotoWidget(int)), this, SLOT(showPhotoWidget(int)));
+//    connect(mainPage, SIGNAL(close()), this, SLOT(deauthenticate())); // TODO
+    connect(this, SIGNAL(logout()), mainPage, SLOT(deleteLater()));
     updateSections();
 }

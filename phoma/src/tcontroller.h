@@ -10,6 +10,7 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QListWidget>
+#include <QVector>
 #include "tuser.h"
 #include "tsection.h"
 #include "tphoto.h"
@@ -36,11 +37,13 @@ public slots:
     void deauthenticate();
     void updateSections();
     void updatePhotos(int sectionId);
-    void showPhotoWidget();
+    void showPhotoWidget(int index);
     void showSectionsWidget();
 
 private:
     bool logged;
+    QVector<TPhoto> photos;
+    QVector<TSection> sections;
     TUser user;
     MainPage *mainPage;
 };

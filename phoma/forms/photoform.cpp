@@ -19,4 +19,5 @@ void PhotoForm::setPhoto(TPhoto &photo)
     QGraphicsScene *scene = new QGraphicsScene(ui->photoView);
     scene->addPixmap(photo.photo);
     ui->photoView->setScene(scene);
+    ui->descriptionLabel->setText(photo.description);
 }

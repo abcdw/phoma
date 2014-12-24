@@ -30,7 +30,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-    TController *controller;
+    QPointer<TController> controller;
 };
 
 #endif // MAINWINDOW_H
