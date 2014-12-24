@@ -139,7 +139,7 @@ void TController::showSectionsWidget()
     mainPage->show();
     connect(mainPage, SIGNAL(updatePhotos(int)), this, SLOT(updatePhotos(int)));
     connect(mainPage, SIGNAL(showPhotoWidget(int)), this, SLOT(showPhotoWidget(int)));
-//    connect(mainPage, SIGNAL(close()), this, SLOT(deauthenticate())); // TODO
+    connect(mainPage, SIGNAL(closedSignal()), this, SLOT(deauthenticate())); // TODO
     connect(this, SIGNAL(logout()), mainPage, SLOT(deleteLater()));
     updateSections();
 }

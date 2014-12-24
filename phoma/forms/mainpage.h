@@ -17,6 +17,9 @@ class MainPage : public QWidget
 {
     Q_OBJECT
 
+protected:
+    void closeEvent(QCloseEvent *);
+
 public:
     explicit MainPage();
     ~MainPage();
@@ -31,6 +34,8 @@ public slots:
 signals:
     void updatePhotos(int);
     void showPhotoWidget(int);
+    void closedSignal();
+
 
 private:
     Ui::MainPage *ui;

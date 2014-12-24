@@ -1,6 +1,12 @@
 #include "mainpage.h"
 #include "ui_mainpage.h"
 
+void MainPage::closeEvent(QCloseEvent * event)
+{
+    QWidget::closeEvent(event);
+    emit closedSignal();
+}
+
 MainPage::MainPage() :
     ui(new Ui::MainPage)
 {
