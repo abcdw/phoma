@@ -2,6 +2,9 @@
 #define TUSER_H
 
 #include <QString>
+#include <QDebug>
+#include <QSqlQuery>
+#include <QCryptographicHash>
 
 class TUser
 {

@@ -25,7 +25,7 @@ int TUser::authenticate(const QString &name, const QString &pass)
 
     QSqlQuery query;
     query.prepare("SELECT * FROM users WHERE username = :username AND pass_hash = :pass");
-    query.bindValue(":username", user);
+    query.bindValue(":username", name);
     query.bindValue(":pass", pass_hash);
     query.exec();
 
@@ -53,7 +53,7 @@ TUser TUser::getFromQuery(QSqlQuery &query)
     user.last_name = query.value(4).toString();
     user.access_level = query.value(5).toInt();
 
-    return photo;
+    return user;
 }
 
 void TUser::save()
