@@ -69,6 +69,8 @@ void TController::authenticate(const QString &user, const QString &pass)
         qDebug() << username << " authenticated";
     }
 
+    count = 1;
+
     if (count) {
         emit authSuccess();
     } else {
