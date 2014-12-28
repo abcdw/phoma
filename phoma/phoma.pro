@@ -20,7 +20,8 @@ SOURCES +=\
     forms/photoform.cpp \
     src/tphoto.cpp \
     src/tsection.cpp \
-    src/tuser.cpp
+    src/tuser.cpp \
+    forms/registrationform.cpp
 
 HEADERS  += \
     src/tcontroller.h \
@@ -29,9 +30,11 @@ HEADERS  += \
     forms/photoform.h \
     src/tphoto.h \
     src/tsection.h \
-    src/tuser.h
+    src/tuser.h \
+    forms/registrationform.h
 
 FORMS    += \
     forms/mainwindow.ui \
     forms/mainpage.ui \
-    forms/photoform.ui
+    forms/photoform.ui \
+    forms/registrationform.ui

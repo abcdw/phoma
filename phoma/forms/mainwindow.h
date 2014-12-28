@@ -5,6 +5,7 @@
 #include <QPointer>
 #include "src/tcontroller.h"
 #include "mainpage.h"
+#include "registrationform.h"
 
 namespace Ui {
 class MainWindow;

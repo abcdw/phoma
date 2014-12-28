@@ -140,6 +140,13 @@ void TController::showSectionsWidget()
     connect(mainPage, SIGNAL(updatePhotos(int)), this, SLOT(updatePhotos(int)));
     connect(mainPage, SIGNAL(showPhotoWidget(int)), this, SLOT(showPhotoWidget(int)));
     connect(mainPage, SIGNAL(closedSignal()), this, SLOT(deauthenticate())); // TODO
+    connect(mainPage, SIGNAL(addSection()), this, SLOT(addSection()));
     connect(this, SIGNAL(logout()), mainPage, SLOT(deleteLater()));
     updateSections();
+}
+
+void TController::addSection()
+{
+//    QMessageBox *mb = new QMessageBox("test", "hello");
+    qDebug() << "hello addSection()";
 }

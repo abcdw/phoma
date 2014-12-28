@@ -35,6 +35,7 @@ signals:
     void updatePhotos(int);
     void showPhotoWidget(int);
     void closedSignal();
+    void addSection();
 
 
 private:
