@@ -31,8 +31,6 @@ void MainWindow::login()
 
 //    emit login(ui->loginEdit->text(), ui->passEdit->text());
     emit login("admin", "admin");
-    RegistrationForm *rf = new RegistrationForm();
-    ui->tabWidget->addTab(rf, "Registration");
 }
 
 void MainWindow::authSuccess()
@@ -45,6 +43,8 @@ void MainWindow::authSuccess()
     ui->passEdit->setEnabled(false);
     ui->logoutButton->setEnabled(true);
     ui->tabWidget->setCurrentIndex(1);
+    RegistrationForm *rf = new RegistrationForm();
+    ui->tabWidget->addTab(rf, "Registration");
 }
 
 void MainWindow::authFail()
