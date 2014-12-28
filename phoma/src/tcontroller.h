@@ -11,6 +11,7 @@
 #include <QFile>
 #include <QListWidget>
 #include <QVector>
+#include <QMessageBox>
 #include "tuser.h"
 #include "tsection.h"
 #include "tphoto.h"
@@ -39,6 +40,7 @@ public slots:
     void updatePhotos(int sectionId);
     void showPhotoWidget(int index);
     void showSectionsWidget();
+    void addSection();
 
 private:
     bool logged;
