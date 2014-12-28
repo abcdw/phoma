@@ -10,6 +10,7 @@ public:
 
     static TUser get(int id);
     static int authenticate(const QString &name, const QString &pass);
+    static TUser getFromQuery(QSqlQuery &query);
     void save();
 
 public:
