@@ -50,27 +50,10 @@ void TController::getPhotos(QListWidget *list)
 
 void TController::authenticate(const QString &user, const QString &pass)
 {
-    qDebug() << "Trying authenticate...";
-    QCryptographicHash md5Generator(QCryptographicHash::Md5);
-    md5Generator.addData(pass.toStdString().c_str());
-    QString pass_hash(md5Generator.result().toHex());
-    qDebug() << pass_hash;
-
-    QSqlQuery query;
-    query.prepare("SELECT * FROM users WHERE username = :username AND pass_hash = :pass");
-    query.bindValue(":username", user);
-    query.bindValue(":pass", pass_hash);
-    query.exec();
-
-    int count = 0;
-    while (query.next()) {
-        ++count;
-        QString username = query.value(1).toString();
-        qDebug() << username << " authenticated";
-    }
-
-    if (count) {
+    if (TUser::authenticate(user, pass)) {
         emit authSuccess();
+        RegistrationForm *rf = new RegistrationForm();
+        showWidget(rf, "Registration");
     } else {
         emit authFail();
     }
@@ -129,14 +112,14 @@ void TController::showPhotoWidget(int index)
     }
 
     pf->setPhoto(photo);
-    pf->show();
+    showWidget(pf, photo.title);
     connect(this, SIGNAL(logout()), pf, SLOT(deleteLater()));
 }
 
 void TController::showSectionsWidget()
 {
     mainPage = new MainPage();
-    mainPage->show();
+    showWidget(mainPage, "Sections/Photos");
     connect(mainPage, SIGNAL(updatePhotos(int)), this, SLOT(updatePhotos(int)));
     connect(mainPage, SIGNAL(showPhotoWidget(int)), this, SLOT(showPhotoWidget(int)));
     connect(mainPage, SIGNAL(closedSignal()), this, SLOT(deauthenticate())); // TODO

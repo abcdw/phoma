@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(controller, SIGNAL(authSuccess()), this, SLOT(authSuccess()));
     connect(controller, SIGNAL(authFail()), this, SLOT(authFail()));
     connect(controller, SIGNAL(logout()), this, SLOT(logout()));
+    connect(controller, SIGNAL(showWidget(QWidget *, QString)), this, SLOT(addTab(QWidget*,QString)));
 //    login();
 }
 
@@ -24,13 +25,18 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::addTab(QWidget *widget, const QString &label)
+{
+    ui->tabWidget->addTab(widget, label);
+}
+
 void MainWindow::login()
 {
 
     ui->statusBar->showMessage("Authentication in progress...");
 
-//    emit login(ui->loginEdit->text(), ui->passEdit->text());
-    emit login("admin", "admin");
+    emit login(ui->loginEdit->text(), ui->passEdit->text());
+//    emit login("admin", "admin");
 }
 
 void MainWindow::authSuccess()
@@ -42,9 +48,6 @@ void MainWindow::authSuccess()
     ui->loginEdit->setEnabled(false);
     ui->passEdit->setEnabled(false);
     ui->logoutButton->setEnabled(true);
-    ui->tabWidget->setCurrentIndex(1);
-    RegistrationForm *rf = new RegistrationForm();
-    ui->tabWidget->addTab(rf, "Registration");
 }
 
 void MainWindow::authFail()

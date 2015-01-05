@@ -5,7 +5,6 @@
 #include <QPointer>
 #include "src/tcontroller.h"
 #include "mainpage.h"
-#include "registrationform.h"
 
 namespace Ui {
 class MainWindow;
@@ -28,6 +27,7 @@ public slots:
    void authSuccess();
    void authFail();
    void logout();
+   void addTab(QWidget *widget, const QString &label);
 
 private:
     Ui::MainWindow *ui;
