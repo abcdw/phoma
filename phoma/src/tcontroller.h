@@ -36,13 +36,14 @@ signals:
     void showWidget(QWidget *widget, const QString &label);
 
 public slots:
-    void authenticate(const QString &user, const QString &pass);
+    void authenticate(const QString &name, const QString &pass);
     void deauthenticate();
     void updateSections();
     void updatePhotos(int sectionId);
     void showPhotoWidget(int index);
     void showSectionsWidget();
     void addSection();
+    void registerUser(TUser user);
 
 private:
     bool logged;

@@ -6,9 +6,22 @@ RegistrationForm::RegistrationForm(QWidget *parent) :
     ui(new Ui::RegistrationForm)
 {
     ui->setupUi(this);
+
+    connect(ui->registerButton, SIGNAL(clicked()), this, SLOT(regUser()));
 }
 
 RegistrationForm::~RegistrationForm()
 {
     delete ui;
+}
+
+void RegistrationForm::regUser()
+{
+    TUser user;
+    user.username = ui->usernameEdit->text();
+    user.setPass(ui->passEdit->text());
+    user.first_name = ui->firstnameEdit->text();
+    user.last_name = ui->lastnameEdit->text();
+    user.access_level = ui->accessBox->currentIndex();
+    emit registerUser(user);
 }

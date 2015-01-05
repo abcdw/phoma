@@ -35,8 +35,8 @@ void MainWindow::login()
 
     ui->statusBar->showMessage("Authentication in progress...");
 
-    emit login(ui->loginEdit->text(), ui->passEdit->text());
-//    emit login("admin", "admin");
+//    emit login(ui->loginEdit->text(), ui->passEdit->text());
+    emit login("admin", "admin");
 }
 
 void MainWindow::authSuccess()
@@ -57,7 +57,9 @@ void MainWindow::authFail()
 
 void MainWindow::logout()
 {
-    ui->tabWidget->removeTab(1);
+    while (ui->tabWidget->count() > 1)
+        ui->tabWidget->removeTab(1);
+
     ui->loginButton->setEnabled(true);
     ui->logoutButton->setEnabled(false);
     ui->loginEdit->setEnabled(true);

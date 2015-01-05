@@ -20,7 +20,7 @@ TUser TUser::get(int id, bool &exist)
     return getFromQuery(query);
 }
 
-bool TUser::authenticate(const QString &name, const QString &pass)
+bool TUser::authenticate(const QString &name, const QString &pass, TUser &user)
 {
     qDebug() << "Trying authenticate...";
     QCryptographicHash md5Generator(QCryptographicHash::Md5);
@@ -38,13 +38,14 @@ bool TUser::authenticate(const QString &name, const QString &pass)
     while (query.next()) {
         ++count;
         QString username = query.value(1).toString();
+        user = getFromQuery(query);
         qDebug() << username << " authenticated";
     }
 
     if (count) {
-        return 1;
+        return true;
     } else {
-        return 0;
+        return false;
     }
 }
 
@@ -59,6 +60,19 @@ TUser TUser::getFromQuery(QSqlQuery &query)
     user.access_level = query.value(5).toInt();
 
     return user;
+}
+
+bool TUser::isAdmin()
+{
+    return access_level == 2;
+}
+
+void TUser::setPass(const QString &pass)
+{
+    QCryptographicHash md5Generator(QCryptographicHash::Md5);
+    md5Generator.addData(pass.toStdString().c_str());
+    QString hash(md5Generator.result().toHex());
+    pass_hash = hash;
 }
 
 void TUser::save()
@@ -76,7 +90,7 @@ void TUser::save()
         query.exec();
     } else {
         query.prepare("INSERT INTO users (username, pass_hash, first_name, last_name, access_level) \
-                                  VALUES (:username, :pass_hash :first_name, :last_name, :access_level)");
+                                  VALUES (:username, :pass_hash, :first_name, :last_name, :access_level)");
         query.bindValue(":username", username);
         query.bindValue(":pass_hash", pass_hash);
         query.bindValue(":first_name", first_name);
@@ -84,5 +98,6 @@ void TUser::save()
         query.bindValue(":access_level", access_level);
         query.exec();
         id = query.lastInsertId().toInt();
+        qDebug() << "user registred";
     }
 }

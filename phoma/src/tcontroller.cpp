@@ -48,12 +48,17 @@ void TController::getPhotos(QListWidget *list)
     }
 }
 
-void TController::authenticate(const QString &user, const QString &pass)
+void TController::authenticate(const QString &name, const QString &pass)
 {
-    if (TUser::authenticate(user, pass)) {
+    TUser user;
+    if (TUser::authenticate(name, pass, user)) {
         emit authSuccess();
-        RegistrationForm *rf = new RegistrationForm();
-        showWidget(rf, "Registration");
+        if (user.isAdmin()) {
+            RegistrationForm *rf = new RegistrationForm();
+            showWidget(rf, "Registration");
+            connect(rf, SIGNAL(registerUser(TUser)), this, SLOT(registerUser(TUser)));
+            connect(this, SIGNAL(logout()), rf, SLOT(deleteLater()));
+        }
     } else {
         emit authFail();
     }
@@ -132,4 +137,9 @@ void TController::addSection()
 {
 //    QMessageBox *mb = new QMessageBox("test", "hello");
     qDebug() << "hello addSection()";
+}
+
+void TController::registerUser(TUser user)
+{
+    user.save();
 }

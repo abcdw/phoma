@@ -12,8 +12,10 @@ public:
     TUser();
 
     static TUser get(int id, bool &exist);
-    static bool authenticate(const QString &name, const QString &pass);
+    static bool authenticate(const QString &name, const QString &pass, TUser &user);
     static TUser getFromQuery(QSqlQuery &query);
+    bool isAdmin();
+    void setPass(const QString &pass);
     void save();
 
 public:
