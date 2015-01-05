@@ -11,8 +11,8 @@ class TUser
 public:
     TUser();
 
-    static TUser get(int id);
-    static int authenticate(const QString &name, const QString &pass);
+    static TUser get(int id, bool &exist);
+    static bool authenticate(const QString &name, const QString &pass);
     static TUser getFromQuery(QSqlQuery &query);
     void save();
 

@@ -1,21 +1,26 @@
 #include "tuser.h"
 
 TUser::TUser()
+    : id(-1)
 {
 }
 
-TUser TUser::get(int id)
+TUser TUser::get(int id, bool &exist)
 {
+    exist = true;
     QSqlQuery query;
     query.prepare("SELECT * FROM users WHERE id=:id");
     query.bindValue(":id", id);
     query.exec();
-    query.next();
+    if (!query.next()) {
+        exist = false;
+        return TUser();
+    }
 
     return getFromQuery(query);
 }
 
-int TUser::authenticate(const QString &name, const QString &pass)
+bool TUser::authenticate(const QString &name, const QString &pass)
 {
     qDebug() << "Trying authenticate...";
     QCryptographicHash md5Generator(QCryptographicHash::Md5);
@@ -39,7 +44,7 @@ int TUser::authenticate(const QString &name, const QString &pass)
     if (count) {
         return 1;
     } else {
-        return -1;
+        return 0;
     }
 }
 
@@ -59,11 +64,25 @@ TUser TUser::getFromQuery(QSqlQuery &query)
 void TUser::save()
 {
     QSqlQuery query;
-    query.prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, access_level = :access_level WHERE id=:id");
-    query.bindValue(":id", id);
-    query.bindValue(":first_name", first_name);
-    query.bindValue(":last_name", last_name);
-    query.bindValue(":access_level", access_level);
+    bool userExist;
+    get(id, userExist);
 
-    query.exec();
+    if (userExist) {
+        query.prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, access_level = :access_level WHERE id=:id");
+        query.bindValue(":id", id);
+        query.bindValue(":first_name", first_name);
+        query.bindValue(":last_name", last_name);
+        query.bindValue(":access_level", access_level);
+        query.exec();
+    } else {
+        query.prepare("INSERT INTO users (username, pass_hash, first_name, last_name, access_level) \
+                                  VALUES (:username, :pass_hash :first_name, :last_name, :access_level)");
+        query.bindValue(":username", username);
+        query.bindValue(":pass_hash", pass_hash);
+        query.bindValue(":first_name", first_name);
+        query.bindValue(":last_name", last_name);
+        query.bindValue(":access_level", access_level);
+        query.exec();
+        id = query.lastInsertId().toInt();
+    }
 }
