@@ -11,7 +11,7 @@
 #include <QFile>
 #include <QListWidget>
 #include <QVector>
-#include <QMessageBox>
+#include <QInputDialog>
 #include "tuser.h"
 #include "tsection.h"
 #include "tphoto.h"

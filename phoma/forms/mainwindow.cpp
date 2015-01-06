@@ -42,8 +42,8 @@ void MainWindow::login()
 void MainWindow::authSuccess()
 {
     ui->statusBar->showMessage("Login successful");
-//    QPointer<MainPage> mainPage = new MainPage(controller);
-//    ui->tabWidget->addTab(mainPage, "Main");
+
+    ui->tabWidget->setCurrentIndex(1);
     ui->loginButton->setEnabled(false);
     ui->loginEdit->setEnabled(false);
     ui->passEdit->setEnabled(false);

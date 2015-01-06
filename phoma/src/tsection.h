@@ -14,7 +14,7 @@ public:
     static QVector<TSection> getAll();
     void save();
 
-private:
+public:
     int id;
     QString name;
     QString description;

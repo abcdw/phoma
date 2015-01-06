@@ -1,6 +1,7 @@
 #include "tphoto.h"
 
 TPhoto::TPhoto()
+    : id(-1)
 {
 }
 

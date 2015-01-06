@@ -135,8 +135,25 @@ void TController::showSectionsWidget()
 
 void TController::addSection()
 {
-//    QMessageBox *mb = new QMessageBox("test", "hello");
-    qDebug() << "hello addSection()";
+    bool ok;
+    QString name = QInputDialog::getText(0, tr("Section input"),
+                                            tr("Section name:"), QLineEdit::Normal, "", &ok);
+    QString description;
+    if (ok) {
+        description = QInputDialog::getText(0, tr("Description input"),
+                                            tr("Description:"), QLineEdit::Normal, "", &ok);
+    } else {
+    }
+
+    if (ok) {
+        TSection section;
+        section.name = name;
+        section.description = description;
+        section.save();
+        updateSections();
+    } else {
+
+    }
 }
 
 void TController::registerUser(TUser user)
