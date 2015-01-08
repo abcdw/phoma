@@ -48,29 +48,17 @@ void TController::getPhotos(QListWidget *list)
     }
 }
 
-void TController::authenticate(const QString &user, const QString &pass)
+void TController::authenticate(const QString &name, const QString &pass)
 {
-    qDebug() << "Trying authenticate...";
-    QCryptographicHash md5Generator(QCryptographicHash::Md5);
-    md5Generator.addData(pass.toStdString().c_str());
-    QString pass_hash(md5Generator.result().toHex());
-    qDebug() << pass_hash;
-
-    QSqlQuery query;
-    query.prepare("SELECT * FROM users WHERE username = :username AND pass_hash = :pass");
-    query.bindValue(":username", user);
-    query.bindValue(":pass", pass_hash);
-    query.exec();
-
-    int count = 0;
-    while (query.next()) {
-        ++count;
-        QString username = query.value(1).toString();
-        qDebug() << username << " authenticated";
-    }
-
-    if (count) {
+    TUser user;
+    if (TUser::authenticate(name, pass, user)) {
         emit authSuccess();
+        if (user.isAdmin()) {
+            RegistrationForm *rf = new RegistrationForm();
+            showWidget(rf, "Registration");
+            connect(rf, SIGNAL(registerUser(TUser)), this, SLOT(registerUser(TUser)));
+            connect(this, SIGNAL(logout()), rf, SLOT(deleteLater()));
+        }
     } else {
         emit authFail();
     }
@@ -129,14 +117,14 @@ void TController::showPhotoWidget(int index)
     }
 
     pf->setPhoto(photo);
-    pf->show();
+    showWidget(pf, photo.title);
     connect(this, SIGNAL(logout()), pf, SLOT(deleteLater()));
 }
 
 void TController::showSectionsWidget()
 {
     mainPage = new MainPage();
-    mainPage->show();
+    showWidget(mainPage, "Sections/Photos");
     connect(mainPage, SIGNAL(updatePhotos(int)), this, SLOT(updatePhotos(int)));
     connect(mainPage, SIGNAL(showPhotoWidget(int)), this, SLOT(showPhotoWidget(int)));
     connect(mainPage, SIGNAL(closedSignal()), this, SLOT(deauthenticate())); // TODO
@@ -147,6 +135,28 @@ void TController::showSectionsWidget()
 
 void TController::addSection()
 {
-//    QMessageBox *mb = new QMessageBox("test", "hello");
-    qDebug() << "hello addSection()";
+    bool ok;
+    QString name = QInputDialog::getText(0, tr("Section input"),
+                                            tr("Section name:"), QLineEdit::Normal, "", &ok);
+    QString description;
+    if (ok) {
+        description = QInputDialog::getText(0, tr("Description input"),
+                                            tr("Description:"), QLineEdit::Normal, "", &ok);
+    } else {
+    }
+
+    if (ok) {
+        TSection section;
+        section.name = name;
+        section.description = description;
+        section.save();
+        updateSections();
+    } else {
+
+    }
+}
+
+void TController::registerUser(TUser user)
+{
+    user.save();
 }

@@ -2,14 +2,20 @@
 #define TUSER_H
 
 #include <QString>
+#include <QDebug>
+#include <QSqlQuery>
+#include <QCryptographicHash>
 
 class TUser
 {
 public:
     TUser();
 
-    static TUser get(int id);
-    static int authenticate(const QString &name, const QString &pass);
+    static TUser get(int id, bool &exist);
+    static bool authenticate(const QString &name, const QString &pass, TUser &user);
+    static TUser getFromQuery(QSqlQuery &query);
+    bool isAdmin();
+    void setPass(const QString &pass);
     void save();
 
 public:

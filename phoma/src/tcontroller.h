@@ -11,12 +11,13 @@
 #include <QFile>
 #include <QListWidget>
 #include <QVector>
-#include <QMessageBox>
+#include <QInputDialog>
 #include "tuser.h"
 #include "tsection.h"
 #include "tphoto.h"
 #include "forms/mainpage.h"
 #include "forms/photoform.h"
+#include "forms/registrationform.h"
 
 class TController : public QObject
 {
@@ -32,15 +33,17 @@ signals:
     void authSuccess();
     void authFail();
     void logout();
+    void showWidget(QWidget *widget, const QString &label);
 
 public slots:
-    void authenticate(const QString &user, const QString &pass);
+    void authenticate(const QString &name, const QString &pass);
     void deauthenticate();
     void updateSections();
     void updatePhotos(int sectionId);
     void showPhotoWidget(int index);
     void showSectionsWidget();
     void addSection();
+    void registerUser(TUser user);
 
 private:
     bool logged;
