@@ -27,7 +27,6 @@ QByteArray TController::uploadPhoto(const QString &path)
 
     QByteArray byteArray = file.readAll();
     return byteArray;
-    emit statusUpdated("Photos");
 }
 
 void TController::getPhotos(QListWidget *list)
