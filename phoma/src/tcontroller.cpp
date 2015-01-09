@@ -59,6 +59,7 @@ void TController::authenticate(const QString &name, const QString &pass)
             connect(rf, SIGNAL(registerUser(TUser)), this, SLOT(registerUser(TUser)));
             connect(this, SIGNAL(logout()), rf, SLOT(deleteLater()));
         }
+        this->user = user;
     } else {
         emit authFail();
     }
@@ -129,6 +130,7 @@ void TController::showSectionsWidget()
     connect(mainPage, SIGNAL(showPhotoWidget(int)), this, SLOT(showPhotoWidget(int)));
     connect(mainPage, SIGNAL(closedSignal()), this, SLOT(deauthenticate())); // TODO
     connect(mainPage, SIGNAL(addSection()), this, SLOT(addSection()));
+    connect(mainPage, SIGNAL(addPhoto()), this, SLOT(addPhoto()));
     connect(this, SIGNAL(logout()), mainPage, SLOT(deleteLater()));
     updateSections();
 }
@@ -139,11 +141,9 @@ void TController::addSection()
     QString name = QInputDialog::getText(0, tr("Section input"),
                                             tr("Section name:"), QLineEdit::Normal, "", &ok);
     QString description;
-    if (ok) {
+    if (ok)
         description = QInputDialog::getText(0, tr("Description input"),
                                             tr("Description:"), QLineEdit::Normal, "", &ok);
-    } else {
-    }
 
     if (ok) {
         TSection section;
@@ -151,9 +151,31 @@ void TController::addSection()
         section.description = description;
         section.save();
         updateSections();
-    } else {
-
     }
+}
+
+void TController::addPhoto()
+{
+
+    bool ok;
+    QString title = QInputDialog::getText(0, tr("Title input"),
+                                            tr("Photo name:"), QLineEdit::Normal, "", &ok);
+    QString description;
+    if (ok)
+        description = QInputDialog::getText(0, tr("Description input"),
+                                            tr("Description:"), QLineEdit::Normal, "", &ok);
+
+    QString fileName;
+    if (ok)
+        fileName = QFileDialog::getOpenFileName(0, tr("Open Image"));
+
+    if (!fileName.isEmpty()) {
+        TPhoto photo;
+        photo.title = title;
+        photo.description = description;
+        photo.owner_id = user.id;
+    }
+
 }
 
 void TController::registerUser(TUser user)

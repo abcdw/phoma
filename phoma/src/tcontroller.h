@@ -43,6 +43,7 @@ public slots:
     void showPhotoWidget(int index);
     void showSectionsWidget();
     void addSection();
+    void addPhoto();
     void registerUser(TUser user);
 
 private:

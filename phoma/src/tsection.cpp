@@ -53,7 +53,6 @@ void TSection::save()
         query.bindValue(":name", name);
         query.bindValue(":description", description);
         query.exec();
-
     } else {
         query.prepare("INSERT INTO sections (name, description) \
                                   VALUES (:name, :description)");

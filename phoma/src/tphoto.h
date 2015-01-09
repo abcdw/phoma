@@ -7,6 +7,7 @@
 #include <QSqlQuery>
 #include <QVariant>
 #include <QBuffer>
+#include "src/tuser.h"
 
 class TPhoto
 {
@@ -16,6 +17,7 @@ public:
     static TPhoto get(int id, bool &exist);
     static QVector<TPhoto> getPhotos(int sectionId);
     static TPhoto getFromQuery(QSqlQuery &query);
+    TUser getOwner();
     void save();
 
 //private:

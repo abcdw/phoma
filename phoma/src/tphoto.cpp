@@ -26,12 +26,19 @@ TPhoto TPhoto::getFromQuery(QSqlQuery &query)
     photo.id = query.value(0).toInt();
     photo.title = query.value(2).toString();
     photo.description = query.value(3).toString();
+    photo.owner_id = query.value(4).toInt();
     QByteArray image = query.value(6).toByteArray();
     QPixmap pixmap;
     pixmap.loadFromData(image);
     photo.photo = pixmap;
 
     return photo;
+}
+
+TUser TPhoto::getOwner()
+{
+    bool exist;
+    return TUser::get(owner_id, exist);
 }
 
 void TPhoto::save()
@@ -45,18 +52,20 @@ void TPhoto::save()
     photo.save(&buf, "JPG");
 
     if (photoExist) {
-        query.prepare("UPDATE photos SET title = :title, description = :description, photo = :photo WHERE id=:id");
+        query.prepare("UPDATE photos SET title = :title, description = :description, photo = :photo, owner_id = :owner_id WHERE id=:id");
         query.bindValue(":id", id);
         query.bindValue(":title", title);
         query.bindValue(":description", description);
         query.bindValue(":photo", img);
+        query.bindValue(":owner_id", owner_id);
         query.exec();
     } else {
-        query.prepare("INSERT INTO photos (title, description, photo) \
-                                  VALUES (:titile, :description, :photo)");
+        query.prepare("INSERT INTO photos (title, description, photo, owner_id) \
+                                  VALUES (:titile, :description, :photo, :owner_id)");
         query.bindValue(":title", title);
         query.bindValue(":description", description);
         query.bindValue(":photo", img);
+        query.bindValue(":owner_id", owner_id);
         query.exec();
         id = query.lastInsertId().toInt();
     }

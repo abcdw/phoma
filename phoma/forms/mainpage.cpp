@@ -15,6 +15,7 @@ MainPage::MainPage() :
     connect(ui->sectionsTable, SIGNAL(clicked(QModelIndex)), this, SLOT(showPhotos(QModelIndex)));
     connect(ui->photosList, SIGNAL(clicked(QModelIndex)), this, SLOT(showPhoto(QModelIndex)));
     connect(ui->addSectionButton, SIGNAL(clicked()), this, SIGNAL(addSection()));
+    connect(ui->addPhotoButton, SIGNAL(clicked()), this, SIGNAL(addPhoto()));
 }
 
 MainPage::~MainPage()

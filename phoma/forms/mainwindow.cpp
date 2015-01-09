@@ -28,6 +28,7 @@ MainWindow::~MainWindow()
 void MainWindow::addTab(QWidget *widget, const QString &label)
 {
     ui->tabWidget->addTab(widget, label);
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
 }
 
 void MainWindow::login()
