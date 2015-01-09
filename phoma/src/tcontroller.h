@@ -25,7 +25,7 @@ class TController : public QObject
 public:
     explicit TController(QObject *parent = 0);
     ~TController();
-    void uploadPhoto(const QString &path);
+    QByteArray uploadPhoto(const QString &path);
     void getPhotos(QListWidget *list);
     bool isLogged();
 
@@ -48,6 +48,7 @@ public slots:
 
 private:
     bool logged;
+    int lastSectionId;
     QVector<TPhoto> photos;
     QVector<TSection> sections;
     TUser user;

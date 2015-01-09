@@ -19,18 +19,14 @@ TController::~TController()
     qDebug("TController deleted");
 }
 
-void TController::uploadPhoto(const QString &path)
+QByteArray TController::uploadPhoto(const QString &path)
 {
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
-        return;
+        return QByteArray();
 
     QByteArray byteArray = file.readAll();
-
-    QSqlQuery query;
-    query.prepare("INSERT INTO photos (photo) VALUES (?)");
-    query.addBindValue(byteArray);
-    query.exec();
+    return byteArray;
 }
 
 void TController::getPhotos(QListWidget *list)
@@ -84,6 +80,10 @@ void TController::updateSections()
 
 void TController::updatePhotos(int sectionId)
 {
+    if (sectionId == -1)
+        sectionId = lastSectionId;
+    lastSectionId = sectionId;
+
     QSqlQuery query;
     query.prepare("SELECT * FROM photos WHERE section_id=:sectionId");
     query.bindValue(":sectionId", sectionId);
@@ -174,8 +174,14 @@ void TController::addPhoto()
         photo.title = title;
         photo.description = description;
         photo.owner_id = user.id;
+        QPixmap pm;
+        pm.loadFromData(uploadPhoto(fileName));
+        photo.photo = pm;
+        photo.section_id = lastSectionId;
+        photo.save();
+        qDebug() << "uploaded photo";
+        updatePhotos(-1);
     }
-
 }
 
 void TController::registerUser(TUser user)

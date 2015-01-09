@@ -26,6 +26,7 @@ public:
     QString title;
     QString description;
     int owner_id;
+    int section_id;
     bool removed;
     QPixmap photo;
 };
