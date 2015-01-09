@@ -35,7 +35,7 @@ QListWidget *MainPage::getPhotosWidget()
 void MainPage::setSectionTableModel(QSqlQueryModel *model)
 {
     ui->sectionsTable->setModel(model);
-    ui->sectionsTable->adjustSize();
+//    ui->sectionsTable->adjustSize();
 }
 
 void MainPage::showPhoto(QModelIndex index)
