@@ -6,13 +6,14 @@
 #include <QPixmap>
 #include <QSqlQuery>
 #include <QVariant>
+#include <QBuffer>
 
 class TPhoto
 {
 public:
     TPhoto();
 
-    static TPhoto get(int id);
+    static TPhoto get(int id, bool &exist);
     static QVector<TPhoto> getPhotos(int sectionId);
     static TPhoto getFromQuery(QSqlQuery &query);
     void save();
