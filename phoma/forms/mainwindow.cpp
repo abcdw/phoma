@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(controller, SIGNAL(authFail()), this, SLOT(authFail()));
     connect(controller, SIGNAL(logout()), this, SLOT(logout()));
     connect(controller, SIGNAL(showWidget(QWidget *, QString)), this, SLOT(addTab(QWidget*,QString)));
+    connect(controller, SIGNAL(statusUpdated(QString)), this, SLOT(statusUpdated(QString)));
 //    login();
 }
 
@@ -29,6 +30,11 @@ void MainWindow::addTab(QWidget *widget, const QString &label)
 {
     ui->tabWidget->addTab(widget, label);
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 1);
+}
+
+void MainWindow::statusUpdated(const QString status)
+{
+    ui->statusBar->showMessage(status);
 }
 
 void MainWindow::login()

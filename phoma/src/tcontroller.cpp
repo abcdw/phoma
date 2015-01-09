@@ -27,6 +27,7 @@ QByteArray TController::uploadPhoto(const QString &path)
 
     QByteArray byteArray = file.readAll();
     return byteArray;
+    emit statusUpdated("Photos");
 }
 
 void TController::getPhotos(QListWidget *list)
@@ -152,6 +153,7 @@ void TController::addSection()
         section.save();
         updateSections();
     }
+    emit statusUpdated("Section added");
 }
 
 void TController::addPhoto()
@@ -182,9 +184,11 @@ void TController::addPhoto()
         qDebug() << "uploaded photo";
         updatePhotos(-1);
     }
+    emit statusUpdated("Photo added");
 }
 
 void TController::registerUser(TUser user)
 {
     user.save();
+    emit statusUpdated("Users updated");
 }

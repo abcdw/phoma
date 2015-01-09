@@ -34,6 +34,7 @@ signals:
     void authFail();
     void logout();
     void showWidget(QWidget *widget, const QString &label);
+    void statusUpdated(QString);
 
 public slots:
     void authenticate(const QString &name, const QString &pass);

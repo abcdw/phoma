@@ -28,6 +28,7 @@ public slots:
    void authFail();
    void logout();
    void addTab(QWidget *widget, const QString &label);
+   void statusUpdated(const QString status);
 
 private:
     Ui::MainWindow *ui;
