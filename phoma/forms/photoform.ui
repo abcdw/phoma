@@ -35,24 +35,38 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="0">
+   <item row="5" column="2">
+    <widget class="QPushButton" name="closeButton">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
     <widget class="QPushButton" name="editButton">
      <property name="text">
       <string>Edit</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="2">
-    <widget class="QPushButton" name="pushButton">
+   <item row="5" column="1">
+    <widget class="QPushButton" name="deleteButton">
      <property name="text">
-      <string>Close</string>
+      <string>Delete</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="ownerLabel">
+     <property name="text">
+      <string>Owner:</string>
      </property>
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="QPushButton" name="deleteButton">
+    <widget class="QLabel" name="ownerNameLabel">
      <property name="text">
-      <string>Delete</string>
+      <string/>
      </property>
     </widget>
    </item>

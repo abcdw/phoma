@@ -19,6 +19,8 @@ void RegistrationForm::regUser()
 {
     TUser user;
     user.username = ui->usernameEdit->text();
+    if (user.username.isEmpty())
+        return
     user.setPass(ui->passEdit->text());
     user.first_name = ui->firstnameEdit->text();
     user.last_name = ui->lastnameEdit->text();

@@ -6,15 +6,18 @@
 #include <QPixmap>
 #include <QSqlQuery>
 #include <QVariant>
+#include <QBuffer>
+#include "src/tuser.h"
 
 class TPhoto
 {
 public:
     TPhoto();
 
-    static TPhoto get(int id);
+    static TPhoto get(int id, bool &exist);
     static QVector<TPhoto> getPhotos(int sectionId);
     static TPhoto getFromQuery(QSqlQuery &query);
+    TUser getOwner();
     void save();
 
 //private:
@@ -23,6 +26,7 @@ public:
     QString title;
     QString description;
     int owner_id;
+    int section_id;
     bool removed;
     QPixmap photo;
 };
