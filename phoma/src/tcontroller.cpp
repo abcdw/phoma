@@ -85,7 +85,7 @@ void TController::updatePhotos(int sectionId)
     lastSectionId = sectionId;
 
     QSqlQuery query;
-    query.prepare("SELECT * FROM photos WHERE section_id=:sectionId");
+    query.prepare("SELECT * FROM photos WHERE section_id=:sectionId AND removed = 0");
     query.bindValue(":sectionId", sectionId);
     query.exec();
 
@@ -120,6 +120,7 @@ void TController::showPhotoWidget(int index)
     pf->setPhoto(photo);
     showWidget(pf, photo.title);
     connect(this, SIGNAL(logout()), pf, SLOT(deleteLater()));
+    connect(pf, SIGNAL())
 }
 
 void TController::showSectionsWidget()
