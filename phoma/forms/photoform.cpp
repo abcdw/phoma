@@ -31,5 +31,6 @@ void PhotoForm::deletePhoto()
 {
     photo.removed = 1;
     photo.save();
+    emit updatePhotos(-1);
     deleteLater();
 }

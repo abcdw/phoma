@@ -120,7 +120,7 @@ void TController::showPhotoWidget(int index)
     pf->setPhoto(photo);
     showWidget(pf, photo.title);
     connect(this, SIGNAL(logout()), pf, SLOT(deleteLater()));
-    connect(pf, SIGNAL())
+    connect(pf, SIGNAL(updatePhotos(int)), this, SLOT(updatePhotos(int)));
 }
 
 void TController::showSectionsWidget()

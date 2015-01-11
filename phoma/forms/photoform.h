@@ -18,7 +18,7 @@ public:
     void setPhoto(TPhoto &photo);
 
 signals:
-    void updatePhotos();
+    void updatePhotos(int);
 
 public slots:
     void deletePhoto();
