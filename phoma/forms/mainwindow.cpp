@@ -41,9 +41,8 @@ void MainWindow::login()
 {
 
     ui->statusBar->showMessage("Authentication in progress...");
-
-//    emit login(ui->loginEdit->text(), ui->passEdit->text());
-    emit login("admin", "admin");
+//      emit login(ui->loginEdit->text(), ui->passEdit->text());
+  emit login("admin", "admin");
 }
 
 void MainWindow::authSuccess()

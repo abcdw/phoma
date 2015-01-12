@@ -15,6 +15,7 @@ public:
     static bool authenticate(const QString &name, const QString &pass, TUser &user);
     static TUser getFromQuery(QSqlQuery &query);
     bool isAdmin();
+    bool isModerator();
     void setPass(const QString &pass);
     void save();
 
