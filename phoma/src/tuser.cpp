@@ -67,6 +67,11 @@ bool TUser::isAdmin()
     return access_level == 2;
 }
 
+bool TUser::isModerator()
+{
+    return access_level > 0;
+}
+
 void TUser::setPass(const QString &pass)
 {
     QCryptographicHash md5Generator(QCryptographicHash::Md5);
@@ -78,17 +83,7 @@ void TUser::setPass(const QString &pass)
 void TUser::save()
 {
     QSqlQuery query;
-    bool userExist;
-    get(id, userExist);
 
-    if (userExist) {
-        query.prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, access_level = :access_level WHERE id=:id");
-        query.bindValue(":id", id);
-        query.bindValue(":first_name", first_name);
-        query.bindValue(":last_name", last_name);
-        query.bindValue(":access_level", access_level);
-        query.exec();
-    } else {
         query.prepare("INSERT INTO users (username, pass_hash, first_name, last_name, access_level) \
                                   VALUES (:username, :pass_hash, :first_name, :last_name, :access_level)");
         query.bindValue(":username", username);
@@ -99,5 +94,5 @@ void TUser::save()
         query.exec();
         id = query.lastInsertId().toInt();
         qDebug() << "user registred";
-    }
+
 }

@@ -17,8 +17,15 @@ public:
     ~PhotoForm();
     void setPhoto(TPhoto &photo);
 
+signals:
+    void updatePhotos(int);
+
+public slots:
+    void deletePhoto();
+
 private:
     Ui::PhotoForm *ui;
+    TPhoto photo;
 };
 
 #endif // PHOTOFORM_H
